@@ -10,6 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($username) || empty($password)) {
         $error = "Please enter both username and password.";
     }
+    // مو تأكذه اذا ناخذها من ديتا بيس زي الكستومر ولا تكون  hard coded
     else if ($username === "admin" && $password === "admin123") {
         $_SESSION["admin_logged_in"] = true;
         header("Location: manageEvents.php");
@@ -23,31 +24,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <title>Admin Login</title>
-  <link href="https://fonts.googleapis.com/css2?family=Jost&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
+    <meta charset="UTF-8" />
+    <title>Admin Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jost&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
 
-  <div class="main">
-    <div class="login">
-      <form method="POST" action="admin.php">
-        <label>Login</label>
+    <div class="main">
+        <div class="login">
+            <form method="POST" action="admin.php">
+                <label>Login</label>
 
-        <?php if (!empty($error)): ?>
-          <p style="color: red; font-size: 0.9em; margin-bottom: 10px;">
-            <?php echo $error; ?>
-          </p>
-        <?php endif; ?>
+                <?php if (!empty($error)): ?>
+                    <p style="color: red; font-size: 0.9em; margin-bottom: 10px;">
+                        <?php echo $error; ?>
+                    </p>
+                <?php endif; ?>
 
-        <input type="text" name="username" placeholder="Username" >
-        <input type="password" name="password" placeholder="Password" >
-        <button type="submit">Login</button>
-      </form>
+                <input type="text" name="username" placeholder="Username">
+                <input type="password" name="password" placeholder="Password">
+                <button type="submit">Login</button>
+            </form>
+        </div>
     </div>
-  </div>
 
 </body>
+
 </html>
