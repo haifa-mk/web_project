@@ -10,7 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($username) || empty($password)) {
         $error = "Please enter both username and password.";
     }
-    // ✅ Only check credentials if fields are not empty
     else if ($username === "admin" && $password === "admin123") {
         $_SESSION["admin_logged_in"] = true;
         header("Location: manageEvents.php");
