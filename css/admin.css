@@ -1,0 +1,150 @@
+
+.admin-container {
+  display: flex;
+  height: 100vh;
+  background-color: white;
+}
+
+.sidebar {
+  width: 220px;
+  background-color: #2c2f33;
+  color: white;
+  padding: 20px;
+}
+
+.sidebar h3 {
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.sidebar a {
+  display: block;
+  color: #bbb;
+  text-decoration: none;
+  margin-bottom: 10px;
+}
+
+.sidebar a:hover {
+  color: #fff;
+}
+
+.admin-main {
+  flex-grow: 1;
+  padding: 30px;
+}
+
+.admin-main h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.admin-table th, .admin-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.actions a {
+  margin-right: 10px;
+  text-decoration: none;
+}
+
+
+
+/* ============ styles for viewEvent.php ============= */
+
+.view-image {
+  max-width: 100%;
+  max-height: 300px;
+  margin-bottom: 20px;
+}
+
+
+/* ============ styles for addEvent.php ============= */
+
+.event-form {
+    background-color: white;
+    padding: 30px;
+    max-width: 700px;
+}
+
+.event-form h2 {
+    margin-bottom: 20px;
+}
+
+.event-form label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.event-form input,
+.event-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    border-radius: 4px;
+}
+
+.event-form button {
+    margin-top: 20px;
+    background-color: #28a745; /* green */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.event-form button:hover {
+    background-color: #218838;
+}
+
+/* ====================== styles for deleteEvent ====================== */
+.delete-box {
+  background-color: #fff4f4;
+  padding: 20px;
+  border: 1px solid #f0c0c0;
+  max-width: 600px;
+}
+
+.delete-box h3 {
+  margin-top: 0;
+}
+
+.delete-box p {
+  margin: 10px 0;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.delete-btn:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.cancel-btn {
+  padding: 10px 20px;
+  text-decoration: none;
+  background-color: #ccc;
+  color: black;
+  border-radius: 4px;
+}
