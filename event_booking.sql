@@ -2,9 +2,9 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: 20 أبريل 2025 الساعة 13:30
--- إصدار الخادم: 10.4.28-MariaDB
+-- Host: localhost
+-- Generation Time: Apr 20, 2025 at 02:35 PM
+-- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- بنية الجدول `admins`
+-- Table structure for table `admins`
 --
 
 CREATE TABLE `admins` (
@@ -34,16 +34,16 @@ CREATE TABLE `admins` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- إرجاع أو استيراد بيانات الجدول `admins`
+-- Dumping data for table `admins`
 --
 
 INSERT INTO `admins` (`id`, `username`, `password`) VALUES
-(1, 'admin', 'f865b53623b121fd34ee5426c792e5c33af8c227');
+(1, 'admin', '$2y$10$dYtj8tt3xLuwUlu5brCNzOCfYPCwekLM9H4RXA2AE7MpyhBkGiFJm');
 
 -- --------------------------------------------------------
 
 --
--- بنية الجدول `bookings`
+-- Table structure for table `bookings`
 --
 
 CREATE TABLE `bookings` (
@@ -56,7 +56,7 @@ CREATE TABLE `bookings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- إرجاع أو استيراد بيانات الجدول `bookings`
+-- Dumping data for table `bookings`
 --
 
 INSERT INTO `bookings` (`id`, `customer_id`, `event_id`, `booking_date`, `num_tickets`, `total_price`) VALUES
@@ -65,7 +65,7 @@ INSERT INTO `bookings` (`id`, `customer_id`, `event_id`, `booking_date`, `num_ti
 -- --------------------------------------------------------
 
 --
--- بنية الجدول `customers`
+-- Table structure for table `customers`
 --
 
 CREATE TABLE `customers` (
@@ -76,7 +76,7 @@ CREATE TABLE `customers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- إرجاع أو استيراد بيانات الجدول `customers`
+-- Dumping data for table `customers`
 --
 
 INSERT INTO `customers` (`id`, `name`, `email`, `password`) VALUES
@@ -85,7 +85,7 @@ INSERT INTO `customers` (`id`, `name`, `email`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
--- بنية الجدول `events`
+-- Table structure for table `events`
 --
 
 CREATE TABLE `events` (
@@ -99,7 +99,7 @@ CREATE TABLE `events` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- إرجاع أو استيراد بيانات الجدول `events`
+-- Dumping data for table `events`
 --
 
 INSERT INTO `events` (`id`, `name`, `event_date`, `location`, `ticket_price`, `image`, `max_tickets`) VALUES
@@ -165,11 +165,11 @@ ALTER TABLE `events`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- قيود الجداول المُلقاة.
+-- Constraints for dumped tables
 --
 
 --
--- قيود الجداول `bookings`
+-- Constraints for table `bookings`
 --
 ALTER TABLE `bookings`
   ADD CONSTRAINT `bookings_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),

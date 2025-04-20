@@ -1,5 +1,6 @@
 <?php
 session_start();
+include '../includes/config.php';
 
 $error = "";
 
@@ -9,17 +10,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($username) || empty($password)) {
         $error = "Please enter both username and password.";
-    }
-    // مو تأكذه اذا ناخذها من ديتا بيس زي الكستومر ولا تكون  hard coded
-    else if ($username === "admin" && $password === "admin123") {
-        $_SESSION["admin_logged_in"] = true;
-        header("Location: manageEvents.php");
-        exit();
     } else {
-        $error = "Invalid username or password.";
+    //prevent sql injection using prepare 
+        $stmt = $conn->prepare("SELECT password FROM admins WHERE username = ?");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows > 0) {
+            $stmt->bind_result($hashed_password);
+            $stmt->fetch();
+
+            if (password_verify($password, $hashed_password)) {
+                $_SESSION["admin_logged_in"] = true;
+                header("Location: manageEvents.php");
+                exit();
+            } else {
+                $error = "Invalid username or password.";
+            }
+        } else {
+            $error = "Invalid username or password.";
+        }
+
+        $stmt->close();
+        $conn->close();
     }
 }
 ?>
+
 
 
 <!DOCTYPE html>
