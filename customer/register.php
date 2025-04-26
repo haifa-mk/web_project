@@ -34,17 +34,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html>
-<head><title>Register</title></head>
+<head>
+    <title>Register</title>
+    <script>
+function validateRegisterForm(e) {
+    e.preventDefault(); // Stop form submission first
+
+    const name = document.forms["regForm"]["name"].value.trim();
+    const email = document.forms["regForm"]["email"].value.trim();
+    const password = document.forms["regForm"]["password"].value;
+    const confirm = document.forms["regForm"]["confirm"].value;
+    const errorDiv = document.getElementById("errorMsg");
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    let error = "";
+
+    if (!name || !email || !password || !confirm) {
+        error = "All fields are required.";
+    } else if (!emailPattern.test(email)) {
+        error = "Invalid email format.";
+    } else if (password !== confirm) {
+        error = "Passwords do not match.";
+    }
+
+    if (error) {
+        errorDiv.innerText = error;
+    } else {
+        document.forms["regForm"].submit(); // Submit if no problems
+    }
+}
+</script>
+</head>
 <body>
     <h2>Register</h2>
-    <form method="POST">
+    <form name="regForm" method="POST" onsubmit="validateRegisterForm(event)">
         <input type="text" name="name" required placeholder="Name"><br>
         <input type="email" name="email" required placeholder="Email"><br>
         <input type="password" name="password" required placeholder="Password"><br>
         <input type="password" name="confirm" required placeholder="Confirm Password"><br>
         <button type="submit">Register</button>
     </form>
-    <p style="color:red;"><?php echo $error; ?></p>
+    <p id="errorMsg" style="color:red;"><?php echo $error; ?></p>
     <p style="color:green;"><?php echo $success; ?></p>
 </body>
 </html>
