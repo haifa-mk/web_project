@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <title>Register</title>
     <script>
-function validateRegisterForm(e) {
+    function validateRegisterForm(e) {
     e.preventDefault(); // Stop form submission first
 
     const name = document.forms["regForm"]["name"].value.trim();
