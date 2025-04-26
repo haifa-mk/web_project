@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="email" name="email" required placeholder="Email"><br>
         <input type="password" name="password" required placeholder="Password"><br>
         <button type="submit">Login</button>
-        <p style="color:red;"><?php echo $error; ?></p>
+        <p id="errorMsg" style="color:red;"><?php echo $error; ?></p>
     </form>
     <p>Not a member yet? <a href="register.php">Register here</a></p>
 </body>
