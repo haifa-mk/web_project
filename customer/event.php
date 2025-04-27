@@ -1,4 +1,5 @@
  <?php
+ 
 session_start();
 include('../includes/config.php');
 
@@ -29,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Invalid ticket quantity selected.";
     } else {
         $_SESSION['cart'][$event_id] = [
+            'event_id' => $event_id,
             'event_name' => $event['name'],
             'event_date' => $event['event_date'],
             'price' => $event['price'],
