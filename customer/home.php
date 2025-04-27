@@ -23,15 +23,16 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body>
 
 <header>
-    <div class="header-top">
-        <h1>🎟️ Event Booking System</h1>
-        <div class="header-buttons">
-            <span>Welcome <?php echo htmlspecialchars($_SESSION['customer_name']); ?>..</span>
-            <a href="cart.php">🛒 Cart</a>
-            <a href="logout.php">🚪 Logout</a>
-        </div>
+  <div class="header-top">
+    <h2>🎟️ Event Booking System</h2>
+    <div class="header-buttons">
+      <span>Welcome, <?= $_SESSION['customer_name'] ?? 'Guest'; ?></span>
+      <a href="cart.php">🛒 Cart</a>
+      <a href="logout.php">🚪 Logout</a>
     </div>
+  </div>
 </header>
+
 
 <main>
     <div class="event-grid">
