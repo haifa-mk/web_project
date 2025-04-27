@@ -245,6 +245,22 @@ button:hover, input[type="submit"]:hover {
 .reserve-btn:hover {
   background-color: #6d44b8;
 }
+/* ==== Cart Total Styling ==== */
+.cart-total {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 15px;
+  margin-right: 10px;
+  color: #333; /* Dark color for Total text */
+}
+
+.cart-total span {
+  margin-right: 8px;
+  color: #573b8a; /* Purple color for the 'Total:' text only */
+}
 
 /* ========== Event Page Specific ========== */
 .event-img {
