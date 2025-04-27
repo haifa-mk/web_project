@@ -1,6 +1,7 @@
  <?php
 session_start();
-include('../config.php');
+include('../includes/config.php');
+
 
 if (!isset($_GET['id'])) {
     header("Location: home.php");
