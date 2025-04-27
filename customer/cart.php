@@ -138,7 +138,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </tbody>
         </table>
 
-        <p><strong>Total Price:</strong> <?= number_format($total_price, 2) ?> SAR</p>
+        <div class="cart-total">
+    <span>Total:</span> <?= number_format($total_price, 2) ?> SAR
+</div>
+
        
 
         <form method="POST">
