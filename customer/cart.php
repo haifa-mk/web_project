@@ -30,13 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // إدخال الحجز في قاعدة البيانات
         $stmt = $conn->prepare("INSERT INTO bookings (user_id, event_id, quantity, total_price, booking_date) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("iiids", $user_id, $event_id, $quantity, $total, $current_date);
-        $stmt->execute();
+        $stmt->execute([$user_id, $event_id, $quantity, $total, $current_date]);
+
 
         // تحديث التذاكر المتاحة
         $stmt_update = $conn->prepare("UPDATE events SET available_tickets = available_tickets - ? WHERE id = ?");
-        $stmt_update->bind_param("ii", $quantity, $event_id);
-        $stmt_update->execute();
+        $stmt_update->execute([$quantity, $event_id]);
     }
 
     // تفريغ السلة
