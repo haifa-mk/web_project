@@ -20,7 +20,6 @@ if (!$event) {
     exit();
 }
 
-$event = $result->fetch_assoc();
 
 //  Add to Cart
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -29,8 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Invalid ticket quantity selected.";
     } else {
         $_SESSION['cart'][$event_id] = [
-            'name' => $event['name'],
-            'date' => $event['event_date'],
+            'event_name' => $event['name'],
+            'event_date' => $event['event_date'],
             'price' => $event['price'],
             'quantity' => $quantity,
             'total' => $event['price'] * $quantity
@@ -83,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <header>
     <h1>Event Booking System</h1>
     <div>
-        <span>Welcome, <?= $_SESSION['user_name'] ?? 'Guest'; ?> | </span>
+        <span>Welcome, <?= $_SESSION['customer_name'] ?? 'Guest'; ?> | </span>
         <a href="cart.php">Cart</a> | <a href="logout.php">Logout</a>
     </div>
 </header>
