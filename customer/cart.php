@@ -19,7 +19,7 @@ foreach ($cart as $item) {
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $user_id = $_SESSION['user_id'];
+    $user_id = $_SESSION['customer_id'];
     $current_date = date('Y-m-d H:i:s');
 
     foreach ($cart as $item) {
@@ -29,8 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $total = $quantity * $price;
 
         // إدخال الحجز في قاعدة البيانات
-        $stmt = $conn->prepare("INSERT INTO bookings (user_id, event_id, quantity, total_price, booking_date) VALUES (?, ?, ?, ?, ?)");
-        $stmt->execute([$user_id, $event_id, $quantity, $total, $current_date]);
+        $stmt = $conn->prepare("INSERT INTO bookings (customer_id, event_id, quantity, total_price, booking_date) VALUES (?, ?, ?, ?, ?)");
+        $stmt->execute([customer_id, $event_id, $quantity, $total, $current_date]);
 
 
         // تحديث التذاكر المتاحة
