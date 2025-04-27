@@ -94,8 +94,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cart</title>
-    <link rel="stylesheet" href="../css/style.css">
+  
 </head>
+<header>
+    <h1>Event Booking System</h1>
+    <div>
+        <span>Welcome, <?= $_SESSION['customer_name'] ?? 'Guest'; ?> | </span>
+        <a href="home.php">Home</a> | <a href="logout.php">Logout</a>
+    </div>
+</header>
 <body>
 
 <main>
@@ -134,6 +141,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p>Your cart is empty!</p>
     <?php endif; ?>
 </main>
+<footer>
+    <p>&copy; <?= date("Y") ?> Event Booking System</p>
+</footer>
 
 </body>
 </html>
