@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="../js/admin_validation.js" defer></script>
 </head>
 
-<body>
+<body class="center-page">
 
 <div class="container">
     <h2>Login</h2>
