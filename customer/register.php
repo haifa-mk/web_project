@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 </script>
 </head>
-<body>
+<body class="center-page">
 <div class="container">
     <h2>Register</h2>
     <form name="regForm" method="POST" onsubmit="validateRegisterForm(event)">

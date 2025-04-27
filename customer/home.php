@@ -18,13 +18,13 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Event Booking System</title>
-    <link rel="stylesheet" href="../assets/css/home.css">
+    <link rel="stylesheet" href="../css/home.css">
 </head>
 <body>
 
 <header>
     <div class="header-top">
-        <h2>🎟️ Event Booking System</h2>
+        <h1>🎟️ Event Booking System</h1>
         <div class="header-buttons">
             <span>Welcome <?php echo htmlspecialchars($_SESSION['customer_name']); ?>..</span>
             <a href="cart.php">🛒 Cart</a>

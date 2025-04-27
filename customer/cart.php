@@ -91,22 +91,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart</title>
-  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
+  <title>Cart</title>
 </head>
-<header>
-    <h1>Event Booking System</h1>
-    <div>
-        <span>Welcome, <?= $_SESSION['customer_name'] ?? 'Guest'; ?> | </span>
-        <a href="home.php">Home</a> | <a href="logout.php">Logout</a>
-    </div>
-</header>
-<body>
 
-<main>
-    <h1>Your Cart</h1>
+<body>  
+
+<header>
+  <div class="header-top">
+    <h1>🎟️ Event Booking System</h1>
+    <div class="header-buttons">
+      <span>Welcome, <?= $_SESSION['customer_name'] ?? 'Guest'; ?></span>
+      <a href="cart.php">🛒 Cart</a>
+      <a href="logout.php">🚪 Logout</a>
+    </div>
+  </div>
+</header>
+
+<main> 
+<div class="cart-container">
+    <h2>Your Cart</h2>
 
     <?php if (!empty($cart)): ?>
         <table>
@@ -116,6 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <th>Date</th>
                     <th>Quantity</th>
                     <th>Price (per ticket)</th>
+                    <th>Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -125,24 +132,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <td><?= htmlspecialchars($item['event_date']) ?></td>
                         <td><?= htmlspecialchars($item['quantity']) ?></td>
                         <td><?= htmlspecialchars(number_format($item['price'] ?? 0, 2)) ?> SAR</td>
+                        <td><?= htmlspecialchars(number_format(($item['quantity']) * ($item['price'] ?? 0), 2)) ?> SAR</td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
 
         <p><strong>Total Price:</strong> <?= number_format($total_price, 2) ?> SAR</p>
-        <p><strong>Date and Time:</strong> <?= date('Y-m-d H:i:s') ?></p>
+       
 
         <form method="POST">
-            <button type="submit">Reserve Tickets</button>
+            <button type="submit" class="reserve-btn">Reserve Tickets</button>
         </form>
 
     <?php else: ?>
         <p>Your cart is empty!</p>
     <?php endif; ?>
+</div>
 </main>
+
 <footer>
-    <p>&copy; <?= date("Y") ?> Event Booking System</p>
+  <p>&copy; <?= date("Y") ?> Event Booking System</p>
 </footer>
 
 </body>

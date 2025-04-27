@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     </script>
 </head>
-<body>
+<body class="center-page">
 <div class="container">
     <h2>Login</h2>
     <form name="loginForm" method="POST" onsubmit="validateLoginForm(event)">
