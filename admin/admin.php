@@ -11,33 +11,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($username) || empty($password)) {
         $error = "Please enter both username and password.";
     } else {
-    //prevent sql injection using prepare 
-        $stmt = $conn->prepare("SELECT password FROM admins WHERE username = ?");
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $stmt->store_result();
+        try {
+            // Prepare the query
+            $stmt = $conn->prepare("SELECT password FROM admins WHERE username = :username");
+            $stmt->execute([':username' => $username]);
 
-        if ($stmt->num_rows > 0) {
-            $stmt->bind_result($hashed_password);
-            $stmt->fetch();
+            // Fetch the result
+            if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $hashed_password = $row['password'];
 
-            if (password_verify($password, $hashed_password)) {
-                $_SESSION["admin_logged_in"] = true;
-                header("Location: manageEvents.php");
-                exit();
+                if (password_verify($password, $hashed_password)) {
+                    $_SESSION["admin_logged_in"] = true;
+                    header("Location: manageEvents.php");
+                    exit();
+                } else {
+                    $error = "Invalid username or password.";
+                }
             } else {
                 $error = "Invalid username or password.";
             }
-        } else {
-            $error = "Invalid username or password.";
+        } catch (PDOException $e) {
+            $error = "Error: " . $e->getMessage();
         }
-
-        $stmt->close();
-        $conn->close();
     }
 }
 ?>
-
 
 
 <!DOCTYPE html>

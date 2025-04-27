@@ -1,4 +1,4 @@
-<?php
+<<?php
 session_start();
 include '../includes/config.php';
 
@@ -13,34 +13,22 @@ if (!isset($_GET['id'])) {
 
 $event_id = $_GET['id'];
 
-//get event details
-$event_stmt = $conn->prepare("SELECT * FROM events WHERE id = ?");
-$event_stmt->bind_param("i", $event_id);
-$event_stmt->execute();
-$event_result = $event_stmt->get_result();
+try {
+    // Prepare and execute the query
+    $event_stmt = $conn->prepare("SELECT * FROM events WHERE id = :id");
+    $event_stmt->execute([':id' => $event_id]);
 
-if ($event_result->num_rows === 0) {
-    die("Event not found.");
-}
+    // Fetch the event
+    $event = $event_stmt->fetch(PDO::FETCH_ASSOC);
 
-$event = $event_result->fetch_assoc();
-
-//check bookings
-$booking_check = $conn->prepare("SELECT COUNT(*) as total FROM bookings WHERE event_id = ?");
-$booking_check->bind_param("i", $event_id);
-$booking_check->execute();
-$bookings = $booking_check->get_result()->fetch_assoc()['total'];
-$hasBookings = $bookings > 0;
-
-//if confirmed and no bookings then delete
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$hasBookings) {
-    $del = $conn->prepare("DELETE FROM events WHERE id = ?");
-    $del->bind_param("i", $event_id);
-    $del->execute();
-    header("Location: manageEvents.php");
-    exit();
+    if (!$event) {
+        die("Event not found.");
+    }
+} catch (PDOException $e) {
+    die("Error: " . $e->getMessage());
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>

@@ -1,4 +1,4 @@
-<?php
+<<?php
 session_start();
 include '../includes/config.php';
 
@@ -13,46 +13,58 @@ if (!isset($_GET['id'])) {
 
 $event_id = $_GET['id'];
 
-$stmt = $conn->prepare("SELECT * FROM events WHERE id = ?");
-$stmt->bind_param("i", $event_id);
-$stmt->execute();
-$result = $stmt->get_result();
+try {
+    // Fetch the event details
+    $stmt = $conn->prepare("SELECT * FROM events WHERE id = :id");
+    $stmt->execute([':id' => $event_id]);
+    $event = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if ($result->num_rows === 0) {
-    die("Event not found.");
-}
-
-$event = $result->fetch_assoc();
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'];
-    $event_date = $_POST['event_date'];
-    $location = $_POST['location'];
-    $ticket_price = $_POST['ticket_price'];
-    $max_tickets = $_POST['max_tickets'];
-
-
-    $image = $event['image']; // keep existing image 
-    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-        $image = $_FILES['image']['name'];
-        $tmp_name = $_FILES['image']['tmp_name'];
-        move_uploaded_file($tmp_name, "../images/" . $image);
+    if (!$event) {
+        die("Event not found.");
     }
 
-    $update = $conn->prepare("UPDATE events SET name = ?, event_date = ?, location = ?, ticket_price = ?, max_tickets = ?, image = ? WHERE id = ?");
-    $update->bind_param("sssdisi", $name, $event_date, $location, $ticket_price, $max_tickets, $image, $event_id);
-    $update->execute();
-if ($update->affected_rows > 0) {
-    echo "Update successful!";
-} else {
-    echo "Update failed or no changes made.";
-}
-exit();
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $name = $_POST['name'];
+        $event_date = $_POST['event_date'];
+        $location = $_POST['location'];
+        $ticket_price = $_POST['ticket_price'];
+        $max_tickets = $_POST['max_tickets'];
 
-    header("Location: manageEvents.php");
-    exit();
+        $image = $event['image']; // Keep existing image
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+            $image = $_FILES['image']['name'];
+            $tmp_name = $_FILES['image']['tmp_name'];
+            move_uploaded_file($tmp_name, "../images/" . $image);
+        }
+
+        // Update the event
+        $update = $conn->prepare("UPDATE events 
+                                  SET name = :name, event_date = :event_date, location = :location, 
+                                      ticket_price = :ticket_price, max_tickets = :max_tickets, image = :image 
+                                  WHERE id = :id");
+
+        $update->execute([
+            ':name' => $name,
+            ':event_date' => $event_date,
+            ':location' => $location,
+            ':ticket_price' => $ticket_price,
+            ':max_tickets' => $max_tickets,
+            ':image' => $image,
+            ':id' => $event_id
+        ]);
+
+        if ($update->rowCount() > 0) {
+            echo "Update successful!";
+        } else {
+            echo "Update failed or no changes made.";
+        }
+        exit();
+    }
+} catch (PDOException $e) {
+    die("Error: " . $e->getMessage());
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>

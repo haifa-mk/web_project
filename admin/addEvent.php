@@ -13,20 +13,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $location = $_POST['location'];
     $ticket_price = $_POST['ticket_price'];
     $max_tickets = $_POST['max_tickets'];
-  
-    
+
     $image = $_FILES['image']['name'];
     $image_tmp = $_FILES['image']['tmp_name'];
     move_uploaded_file($image_tmp, "../images/" . $image);
 
-    $stmt = $conn->prepare("INSERT INTO events (name, event_date, location, ticket_price, max_tickets, image) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssdis", $name, $event_date, $location, $ticket_price, $max_tickets, $image);
-    $stmt->execute();
+    try {
+        $stmt = $conn->prepare("INSERT INTO events (name, event_date, location, ticket_price, max_tickets, image) 
+                                VALUES (:name, :event_date, :location, :ticket_price, :max_tickets, :image)");
+        $stmt->execute([
+            ':name' => $name,
+            ':event_date' => $event_date,
+            ':location' => $location,
+            ':ticket_price' => $ticket_price,
+            ':max_tickets' => $max_tickets,
+            ':image' => $image
+        ]);
 
-    header("Location: manageEvents.php");
-    exit();
+        header("Location: manageEvents.php");
+        exit();
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>

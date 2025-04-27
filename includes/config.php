@@ -1,13 +1,14 @@
 <?php
-$host = 'localhost';    
-$user = 'root';          
-$password = '';      
-$dbname = 'event_booking'; 
+$host = 'localhost';
+$dbname = 'event_booking';
+$user = 'root';
+$password = '';
 
-
-$conn = new mysqli($host, $user, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+try {
+    $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $user, $password);
+  
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Connection failed: " . $e->getMessage());
 }
 ?>
