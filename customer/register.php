@@ -47,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="../css/style.css"> 
     <title>Register</title>
     <script>
     function validateRegisterForm(e) {
@@ -79,6 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </script>
 </head>
 <body>
+<div class="container">
     <h2>Register</h2>
     <form name="regForm" method="POST" onsubmit="validateRegisterForm(event)">
         <input type="text" name="name" required placeholder="Name"><br>
@@ -87,7 +89,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="password" name="confirm" required placeholder="Confirm Password"><br>
         <button type="submit">Register</button>
     </form>
-    <p id="errorMsg" style="color:red;"><?php echo $error; ?></p>
-    <p style="color:green;"><?php echo $success; ?></p>
+    <p id="errorMsg"><?php echo $error; ?></p>
+    <p class="successMsg"><?php echo $success; ?></p>
+</div>
 </body>
 </html>

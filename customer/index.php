@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html>
 <head>
     <title>Login</title>
+	 <link rel="stylesheet" href="../css/style.css"> 
     <script>
     function validateLoginForm(e) {
         e.preventDefault();
@@ -47,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </script>
 </head>
 <body>
+<div class="container">
     <h2>Login</h2>
     <form name="loginForm" method="POST" onsubmit="validateLoginForm(event)">
         <input type="email" name="email" required placeholder="Email"><br>
@@ -55,5 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <p id="errorMsg" style="color:red;"><?php echo $error; ?></p>
     </form>
     <p>Not a member yet? <a href="register.php">Register here</a></p>
+</div>
 </body>
+
 </html>
