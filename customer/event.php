@@ -9,13 +9,13 @@ if (!isset($_GET['id'])) {
 
 $event_id = intval($_GET['id']);
 
-$query = "SELECT * FROM events WHERE id = ?";
+$query = "SELECT * FROM events WHERE id = :id";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("i", $event_id);
+$stmt->bindParam(":id", $event_id, PDO::PARAM_INT);
 $stmt->execute();
-$result = $stmt->get_result();
+$event = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if ($result->num_rows === 0) {
+if (!$event) {
     echo "Event not found.";
     exit();
 }
