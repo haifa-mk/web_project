@@ -44,3 +44,29 @@ function validateAddEvent() {
 
 
 
+function validateEditEvent() {
+    const name = document.getElementById('eventName').value.trim();
+    const date = document.getElementById('eventDate').value.trim();
+    const location = document.getElementById('location').value.trim();
+    const price = document.getElementById('ticketPrice').value.trim();
+    const maxTickets = document.getElementById('maxTickets').value.trim();
+    const errorDiv = document.getElementById('editEventError');
+
+    if (!name || !date || !location || !price || !maxTickets) {
+        errorDiv.textContent = "All fields must be filled.";
+        return false;
+    }
+
+    if (isNaN(price) || price <= 0) {
+        errorDiv.textContent = "Ticket price must be a positive number.";
+        return false;
+    }
+
+    if (!Number.isInteger(Number(maxTickets)) || maxTickets <= 0) {
+        errorDiv.textContent = "Maximum tickets must be a positive whole number.";
+        return false;
+    }
+
+    errorDiv.textContent = ""; // Clear error if everything is fine
+    return true; // Allow the form to submit
+}

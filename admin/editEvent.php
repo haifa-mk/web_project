@@ -58,6 +58,8 @@ exit();
 <head>
     <title>Edit Event</title>
     <link rel="stylesheet" href="../css/admin.css">
+    <script src="../js/admin_validation.js" defer></script>
+
 </head>
 <body class="admin-container">
 
@@ -70,31 +72,33 @@ exit();
 </div>
 
 <div class="admin-main">
-    <form action="" method="POST" enctype="multipart/form-data" class="event-form">
-        <h2>Edit Event</h2>
+<form action="" method="POST" enctype="multipart/form-data" class="event-form" onsubmit="return validateEditEvent();">
+    <h2>Edit Event</h2>
 
-        <label for="name">Event Name:</label>
-        <input type="text" name="name" value="<?= htmlspecialchars($event['name']) ?>" required>
+    <label for="eventName">Event Name:</label>
+    <input type="text" id="eventName" name="name" value="<?= htmlspecialchars($event['name']) ?>" required>
 
-        <label for="event_date">Event Date:</label>
-        <input type="datetime-local" name="event_date" value="<?= date('Y-m-d\TH:i', strtotime($event['event_date'])) ?>" required>
+    <label for="eventDate">Event Date:</label>
+    <input type="datetime-local" id="eventDate" name="event_date" value="<?= date('Y-m-d\TH:i', strtotime($event['event_date'])) ?>" required>
 
-        <label for="location">Location:</label>
-        <input type="text" name="location" value="<?= htmlspecialchars($event['location']) ?>" required>
+    <label for="location">Location:</label>
+    <input type="text" id="location" name="location" value="<?= htmlspecialchars($event['location']) ?>" required>
 
-        <label for="ticket_price">Ticket Price (SAR):</label>
-        <input type="number" step="0.01" name="ticket_price" value="<?= $event['ticket_price'] ?>" required>
+    <label for="ticketPrice">Ticket Price (SAR):</label>
+    <input type="number" id="ticketPrice" step="0.01" name="ticket_price" value="<?= $event['ticket_price'] ?>" required>
 
-        <label for="max_tickets">Maximum Tickets:</label>
-        <input type="number" name="max_tickets" value="<?= $event['max_tickets'] ?>" required>
+    <label for="maxTickets">Maximum Tickets:</label>
+    <input type="number" id="maxTickets" name="max_tickets" value="<?= $event['max_tickets'] ?>" required>
 
-        <label for="image">Event Image:</label>
-        <input type="file" name="image" accept="image/*">
-        <small>Current image: <?= htmlspecialchars($event['image']) ?></small>
+    <label for="eventImage">Event Image:</label>
+    <input type="file" id="eventImage" name="image" accept="image/*">
+    <small>Current image: <?= htmlspecialchars($event['image']) ?></small>
 
+    <div id="editEventError" style="color: red; margin-top: 10px;"></div>
 
-        <button type="submit" class="update-btn">Update Event</button>
-    </form>
+    <button type="submit" class="update-btn">Update Event</button>
+</form>
+
 </div>
 
 </body>
