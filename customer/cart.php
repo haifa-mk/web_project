@@ -3,7 +3,7 @@ session_start();
 require_once '../includes/config.php';
 
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['customer_id'])) {
     header('Location: ../customer/index.php');
     exit();
 }
