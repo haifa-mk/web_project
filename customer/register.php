@@ -23,10 +23,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             // Hash password and insert
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $conn->prepare("INSERT INTO customers (name, email, password) VALUES (?, ?, ?)");
-            $stmt->execute([$name, $email, $hashedPassword]);
-            $success = "Registered successfully. Redirecting to login...";
-            header("refresh:2;url=index.php");
+             // Insert into database
+            try {
+                $stmt = $conn->prepare("INSERT INTO customers (name, email, password) VALUES (?, ?, ?)");
+                if ($stmt->execute([$name, $email, $hashedPassword])) {
+                    $success = "Registered successfully. Redirecting to login...";
+                    // Redirect to login page after 2 seconds
+                    header("refresh:2;url=index.php");
+                    exit();
+                } else {
+                    // If the query failed to execute, set an error
+                    $error = "There was an error registering. Please try again.";
+                }
+            } catch (Exception $e) {
+                // Catch any exception during the database query and set an error message
+                $error = "Error: " . $e->getMessage();
+            }
         }
     }
 }
