@@ -30,12 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Invalid ticket quantity selected.";
     } else {
         $_SESSION['cart'][$event_id] = [
-            'event_id' => $event_id,
+              'event_id' => $event_id,
             'event_name' => $event['name'],
             'event_date' => $event['event_date'],
-            'price' => $event['price'],
+            'price' => $event['ticket_price'],
             'quantity' => $quantity,
-            'total' => $event['price'] * $quantity
+            'total' => $event['ticket_price'] * $quantity
         ];
         header("Location: cart.php");
         exit();
@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h1>Event Booking System</h1>
     <div>
         <span>Welcome, <?= $_SESSION['customer_name'] ?? 'Guest'; ?> | </span>
-        <a href="cart.php">Cart</a> | <a href="logout.php">Logout</a>
+        <a href="home.php">Home</a>  <a href="cart.php">Cart</a> | <a href="logout.php">Logout</a>
     </div>
 </header>
 
@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h2><?= htmlspecialchars($event['name']) ?></h2>
             <p><strong>Date:</strong> <?= htmlspecialchars($event['event_date']) ?></p>
             <p><strong>Location:</strong> <?= htmlspecialchars($event['location']) ?></p>
-            <p><strong>Price:</strong> $<?= htmlspecialchars($event['price']) ?></p>
+            <p><strong>Price:</strong> $<?= htmlspecialchars($event['ticket_price']) ?></p>
             <p><?= nl2br(htmlspecialchars($event['description'])) ?></p>
         </div>
 
