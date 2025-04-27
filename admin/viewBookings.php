@@ -7,22 +7,28 @@ if (!isset($_SESSION["admin_logged_in"])) {
     exit();
 }
 
-$query = "
-    SELECT 
-        c.name AS customer_name,
-        c.email AS customer_email,
-        b.booking_date,
-        e.name AS event_name,
-        e.event_date,
-        b.num_tickets,
-        b.total_price
-    FROM bookings b
-    JOIN customers c ON b.customer_id = c.id
-    JOIN events e ON b.event_id = e.id
-    ORDER BY b.booking_date DESC
-";
+try {
+    $query = "
+        SELECT 
+            c.name AS customer_name,
+            c.email AS customer_email,
+            b.booking_date,
+            e.name AS event_name,
+            e.event_date,
+            b.num_tickets,
+            b.total_price
+        FROM bookings b
+        JOIN customers c ON b.customer_id = c.id
+        JOIN events e ON b.event_id = e.id
+        ORDER BY b.booking_date DESC
+    ";
 
-$result = $conn->query($query);
+    $stmt = $conn->query($query);
+    $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    die("Error: " . $e->getMessage());
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -56,18 +62,18 @@ $result = $conn->query($query);
             </tr>
         </thead>
         <tbody>
-            <?php if ($result->num_rows > 0): ?>
-                <?php while ($row = $result->fetch_assoc()): ?>
+            <?php if (!empty($bookings)): ?>
+                <?php foreach ($bookings as $row): ?>
                     <tr>
                         <td><?= htmlspecialchars($row['customer_name']) ?></td>
                         <td><?= htmlspecialchars($row['customer_email']) ?></td>
                         <td><?= date("Y-m-d", strtotime($row['booking_date'])) ?></td>
                         <td><?= htmlspecialchars($row['event_name']) ?></td>
                         <td><?= date("Y-m-d", strtotime($row['event_date'])) ?></td>
-                        <td><?= $row['num_tickets'] ?></td>
+                        <td><?= htmlspecialchars($row['num_tickets']) ?></td>
                         <td>$<?= number_format($row['total_price'], 2) ?></td>
                     </tr>
-                <?php endwhile; ?>
+                <?php endforeach; ?>
             <?php else: ?>
                 <tr><td colspan="7">No bookings found.</td></tr>
             <?php endif; ?>

@@ -1,4 +1,4 @@
-<<?php
+<?php
 session_start();
 include '../includes/config.php';
 
@@ -14,16 +14,31 @@ if (!isset($_GET['id'])) {
 $event_id = $_GET['id'];
 
 try {
-    // Prepare and execute the query
+    // Fetch the event details
     $event_stmt = $conn->prepare("SELECT * FROM events WHERE id = :id");
     $event_stmt->execute([':id' => $event_id]);
-
-    // Fetch the event
     $event = $event_stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$event) {
         die("Event not found.");
     }
+
+    // Check if event has any bookings
+    $booking_stmt = $conn->prepare("SELECT COUNT(*) FROM bookings WHERE event_id = :id");
+    $booking_stmt->execute([':id' => $event_id]);
+    $bookings = $booking_stmt->fetchColumn();
+    $hasBookings = $bookings > 0;
+
+    // If form submitted and no bookings, delete the event
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$hasBookings) {
+        $delete_stmt = $conn->prepare("DELETE FROM events WHERE id = :id");
+        $delete_stmt->execute([':id' => $event_id]);
+
+        // Redirect after successful delete
+        header("Location: manageEvents.php?delete=success");
+        exit();
+    }
+
 } catch (PDOException $e) {
     die("Error: " . $e->getMessage());
 }
@@ -61,8 +76,8 @@ try {
         </p>
 
         <form method="POST">
-    <a href="manageEvents.php" class="cancel-btn">Cancel</a>
-    <button type="submit" class="delete-btn" <?= $hasBookings ? 'disabled' : '' ?>>Yes, Delete this Event</button>
+            <a href="manageEvents.php" class="cancel-btn">Cancel</a>
+            <button type="submit" class="delete-btn" <?= $hasBookings ? 'disabled' : '' ?>>Yes, Delete this Event</button>
         </form>
     </div>
 </div>

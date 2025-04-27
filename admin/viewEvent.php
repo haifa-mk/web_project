@@ -14,17 +14,19 @@ if (!isset($_GET['id'])) {
 
 $event_id = $_GET['id'];
 
-$stmt = $conn->prepare("SELECT * FROM events WHERE id = ?");
-$stmt->bind_param("i", $event_id);
-$stmt->execute();
-$result = $stmt->get_result();
+try {
+    $stmt = $conn->prepare("SELECT * FROM events WHERE id = :id");
+    $stmt->execute([':id' => $event_id]);
+    $event = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if ($result->num_rows === 0) {
-    echo "Event not found.";
+    if (!$event) {
+        echo "Event not found.";
+        exit();
+    }
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
     exit();
 }
-
-$event = $result->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
@@ -47,10 +49,10 @@ $event = $result->fetch_assoc();
         <h2>Event Details</h2>
 
         <?php if (!empty($event['image'])): ?>
-            <img src="../images/<?= $event['image'] ?>" class="view-image">
+            <img src="../images/<?= htmlspecialchars($event['image']) ?>" class="view-image">
         <?php endif; ?>
 
-        <div >
+        <div>
             <h3><?= htmlspecialchars($event['name']) ?></h3>
             <p><strong>Date:</strong> <?= date("F j, Y", strtotime($event['event_date'])) ?></p>
             <p><strong>Time:</strong> <?= date("g:i A", strtotime($event['event_date'])) ?></p>
