@@ -104,8 +104,8 @@ CREATE TABLE `events` (
 
 INSERT INTO `events` (`id`, `name`, `event_date`, `location`, `ticket_price`, `image`, `max_tickets`) VALUES
 (2, 'Science Festival', '2025-05-27 15:55:00', 'Riyadh', 50.00, 'event2.jpg', 100),
-(1, 'Food Festival', '2025-08-15 12:00:00', 'Downtown Park', 20.00, 'food.jpg', 300),
-(3, 'Sports Event', '2025-09-20 17:30:00', 'National Stadium', 75.00, 'sports.jpg', 150);
+(1, 'Food Festival', '2025-08-15 12:00:00', 'Downtown Park', 20.00, 'food.jpeg', 300),
+(3, 'Sports Event', '2025-09-20 17:30:00', 'National Stadium', 75.00, 'sports.jpeg', 150);
 
 
 --
