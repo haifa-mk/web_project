@@ -81,3 +81,40 @@ button {
 button:hover {
   background: #6d44b8;
 }
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {  /* Monitor display */
+    .event-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {  /* Tablet display */
+    .event-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card img {
+        height: 180px;
+    }
+
+    .header-top {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {  /* Mobile display*/
+    .card img {
+        height: 160px;
+    }
+
+    .card-content h3 {
+        font-size: 1rem;
+    }
+
+    .book-btn {
+        font-size: 0.9rem;
+    }
+}
