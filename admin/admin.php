@@ -12,11 +12,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Please enter both username and password.";
     } else {
         try {
-            // Prepare the query
             $stmt = $conn->prepare("SELECT password FROM admins WHERE username = :username");
             $stmt->execute([':username' => $username]);
 
-            // Fetch the result
             if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $hashed_password = $row['password'];
 
@@ -36,43 +34,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <title>Admin Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Jost&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="../css/style.css">
     <script src="../js/admin_validation.js" defer></script>
-
-    
 </head>
 
 <body>
 
-    <div class="main">
-        <div class="login">
-            <form method="POST" action="admin.php"  onsubmit="return validateAdminLogin();">
-                <label>Login</label>
-                <div id="adminLoginError" style="color: red; font-size: 0.9em; margin-bottom: 10px;"></div>
+<div class="container">
+    <h2>Login</h2>
 
+    <form method="POST" action="admin.php" onsubmit="return validateAdminLogin();">
+        <div id="adminLoginError" style="color: red; font-size: 0.9em; margin-bottom: 10px;"></div>
 
-                <?php if (!empty($error)): ?>
-                    <p style="color: red; font-size: 0.9em; margin-bottom: 10px;">
-                        <?php echo $error; ?>
-                    </p>
-                <?php endif; ?>
+        <?php if (!empty($error)): ?>
+            <p id="errorMsg"><?php echo $error; ?></p>
+        <?php endif; ?>
 
-                <input type="text"  id="username"  name="username" placeholder="Username">
-                <input type="password" id="password"  name="password" placeholder="Password">
-                <button type="submit">Login</button>
-            </form>
-        </div>
-    </div>
+        <input type="text" id="username" name="username" placeholder="Username">
+        <input type="password" id="password" name="password" placeholder="Password">
+        <button type="submit">Login</button>
+    </form>
+</div>
 
 </body>
-
 </html>
