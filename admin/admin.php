@@ -48,14 +48,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Admin Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Jost&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/admin_validation.js" defer></script>
+
+    
 </head>
 
 <body>
 
     <div class="main">
         <div class="login">
-            <form method="POST" action="admin.php">
+            <form method="POST" action="admin.php"  onsubmit="return validateAdminLogin();">
                 <label>Login</label>
+                <div id="adminLoginError" style="color: red; font-size: 0.9em; margin-bottom: 10px;"></div>
+
 
                 <?php if (!empty($error)): ?>
                     <p style="color: red; font-size: 0.9em; margin-bottom: 10px;">
@@ -63,8 +68,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </p>
                 <?php endif; ?>
 
-                <input type="text" name="username" placeholder="Username">
-                <input type="password" name="password" placeholder="Password">
+                <input type="text"  id="username"  name="username" placeholder="Username">
+                <input type="password" id="password"  name="password" placeholder="Password">
                 <button type="submit">Login</button>
             </form>
         </div>
