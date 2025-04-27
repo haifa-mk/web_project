@@ -9,7 +9,7 @@ if (!isset($_SESSION['customer_id'])) {
 }
 
 // Get events from database
-$stmt = $conn->query("SELECT * FROM events ORDER BY date_time ASC");
+$stmt = $conn->query("SELECT * FROM events ORDER BY event_date ASC");
 $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -40,7 +40,7 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <img src="../images/<?php echo htmlspecialchars($event['image']); ?>" alt="Event Image">
                 <div class="card-content">
                     <h3><?php echo htmlspecialchars($event['name']); ?></h3>
-                    <p><?php echo date("F j, Y - g:i A", strtotime($event['date_time'])); ?></p>
+                    <p><?php echo date("F j, Y - g:i A", strtotime($event['event_date'])); ?></p>
                     <form action="event.php" method="GET">
                         <input type="hidden" name="id" value="<?php echo $event['id']; ?>">
                         <button type="submit" class="book-btn">Book Now</button>
